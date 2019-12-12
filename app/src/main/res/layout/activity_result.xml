@@ -52,19 +52,7 @@
         app:layout_constraintStart_toEndOf="@+id/llColor"
         app:layout_constraintTop_toBottomOf="@+id/etSampleName" />
 
-    <TextView
-        android:id="@+id/textHsl"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/llColor"
-        app:layout_constraintTop_toBottomOf="@+id/txtRGB"
-        app:layout_constraintVertical_bias="0.022" />
+
 
     <Button
         android:id="@+id/btnSave"
@@ -81,6 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textHsl"
+        app:layout_constraintTop_toBottomOf="@+id/llColor"
         app:layout_constraintVertical_bias="0.718" />
 </androidx.constraintlayout.widget.ConstraintLayout>

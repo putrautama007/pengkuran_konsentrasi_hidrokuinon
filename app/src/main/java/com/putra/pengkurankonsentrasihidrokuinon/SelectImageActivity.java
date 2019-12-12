@@ -60,6 +60,13 @@ public class SelectImageActivity extends AppCompatActivity {
             }
         });
 
+        ivSetImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(view);
+            }
+        });
+
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,11 +173,19 @@ public class SelectImageActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_IMAGE_CODE && resultCode == RESULT_OK){
             Uri selectedImage = data.getData();
-            CropImage.activity(selectedImage)
-                    .start(this);
+            if (selectedImage != null){
+                CropImage.activity(selectedImage)
+                        .start(this);
+            }else{
+                ivSetImage.setVisibility(View.GONE);
+            }
         }else if (requestCode == CAPTURE_IMAGE_CODE && resultCode == RESULT_OK){
-            CropImage.activity(Uri.parse(cameraFilePath))
-                    .start(this);
+            if (cameraFilePath != null){
+                CropImage.activity(Uri.parse(cameraFilePath))
+                        .start(this);
+            }else{
+                ivSetImage.setVisibility(View.GONE);
+            }
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);

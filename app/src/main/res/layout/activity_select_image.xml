@@ -26,6 +26,7 @@
         android:background="@drawable/rounded_image"
         android:visibility="gone"
         android:scaleType="fitXY"
+        android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
