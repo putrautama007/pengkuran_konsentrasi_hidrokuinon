@@ -1,67 +1,63 @@
 package com.putra.pengkurankonsentrasihidrokuinon;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.palette.graphics.Palette;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.io.File;
-import java.util.Arrays;
+import com.putra.pengkurankonsentrasihidrokuinon.model.BitMapConverter;
+import com.putra.pengkurankonsentrasihidrokuinon.model.PerhitunganKonsentrasi;
+
+import java.util.Objects;
 
 public class ResultActivity extends AppCompatActivity {
 
     EditText etSampleName;
     LinearLayout llColor;
-    TextView tvRBGColor;
+    TextView tvRed, tvGreen, tvBlue, tvConcentration, tvHqLevel, tvStatus;
     Button btnSaveSample;
 
-    private Palette.Swatch vibrantSwatch;
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         etSampleName = findViewById(R.id.etSampleName);
         llColor = findViewById(R.id.llColor);
-        tvRBGColor = findViewById(R.id.txtRGB);
+        tvRed = findViewById(R.id.txtRed);
+        tvGreen = findViewById(R.id.txtGreen);
+        tvBlue = findViewById(R.id.txtBlue);
+        tvConcentration = findViewById(R.id.tvConcentration);
+        tvHqLevel = findViewById(R.id.tvHQLevel);
+        tvStatus = findViewById(R.id.tvStatus);
         btnSaveSample = findViewById(R.id.btnSave);
 
-        Bitmap bitmap =  getIntent().getParcelableExtra("result");
+        Bitmap bitmap = getIntent().getParcelableExtra("result");
 
-//        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-//            @Override
-//            public void onGenerated(Palette palette) {
-//                vibrantSwatch = palette.getDominantSwatch();
-//                int vibrantRGB = vibrantSwatch.getRgb();
-//                float[] vibrantHSL = vibrantSwatch.getHsl();
-//
-//                int color = (int)Long.parseLong(String.valueOf(vibrantRGB), 16);
-//                int r = (color >> 16) & 0xFF;
-//                int g = (color >> 8) & 0xFF;
-//                int b = (color) & 0xFF;
-//
-//
-//                tvRBGColor.setText("red : "+r + " Green: " + g+ " Blue: " + b);
-//                tvHSLColor.setText("Hue : "+vibrantHSL[0] + " saturation: " + vibrantHSL[1]+ " lightness: " + vibrantHSL[2]);
-//                llColor.setBackgroundColor(vibrantRGB);
-//            }
-//        });
-        int[] rgb = getAverageColorRGB(bitmap);
-        tvRBGColor.setText("red : "+rgb[0] + " Green: " + rgb[1]+ " Blue: " + rgb[2]);
+        assert bitmap != null;
+        BitMapConverter bitMapConverter = new BitMapConverter(bitmap);
+        int[] rgb = bitMapConverter.getAverageColorRGB();
 
-        llColor.setBackgroundColor(Color.rgb(rgb[0],rgb[1],rgb[2]));
+        tvRed.setText(getResources().getString(R.string.red) + rgb[0]);
+        tvGreen.setText(getResources().getString(R.string.green) + rgb[1]);
+        tvBlue.setText(getResources().getString(R.string.blue) + rgb[2]);
+
+        llColor.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
+
+        PerhitunganKonsentrasi perhitunganKonsentrasi = new PerhitunganKonsentrasi(rgb[2]);
+        tvConcentration.setText(getResources().getString(R.string.konsentrasi) + perhitunganKonsentrasi.concentrationCalculation() + getResources().getString(R.string.satuan_konsentrasi));
+        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + perhitunganKonsentrasi.concentrationPercentage());
+        tvStatus.setText(getResources().getString(R.string.status) + perhitunganKonsentrasi.checkStatus());
 
     }
 
@@ -69,32 +65,5 @@ public class ResultActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    public static int[] getAverageColorRGB(Bitmap bitmap) {
-        final int width = bitmap.getWidth();
-        final int height = bitmap.getHeight();
-        int size = width * height;
-        int pixelColor;
-        int r, g, b;
-        r = g = b = 0;
-        for (int x = 0; x < width; ++x) {
-            for (int y = 0; y < height; ++y) {
-                pixelColor = bitmap.getPixel(x, y);
-                if (pixelColor == 0) {
-                    size--;
-                    continue;
-                }
-                r += Color.red(pixelColor);
-                g += Color.green(pixelColor);
-                b += Color.blue(pixelColor);
-            }
-        }
-        r /= size;
-        g /= size;
-        b /= size;
-        return new int[] {
-                r, g, b
-        };
     }
 }

@@ -6,4 +6,11 @@
     <string name="gallery">Gallery</string>
     <string name="masukan_nama_sample">Masukan Nama Sample</string>
     <string name="simpan_hasil">Simpan Hasil</string>
+    <string name="red">Red :</string>
+    <string name="satuan_konsentrasi">ppm</string>
+    <string name="konsentrasi">Konsentrasi :</string>
+    <string name="green">Green :</string>
+    <string name="blue">Blue :</string>
+    <string name="tingkat_hq">Tingkat HQ :</string>
+    <string name="status">Status :</string>
 </resources>
