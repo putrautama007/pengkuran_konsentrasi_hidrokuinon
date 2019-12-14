@@ -1,10 +1,10 @@
 package com.putra.pengkurankonsentrasihidrokuinon.model;
 
-public class PerhitunganKonsentrasi {
+public class CalculationConcentration {
     private double rgb;
     private static final String STATUS_GOOD = "Layak Pakai";
     private static final String STATUS_BAD = "Tidak Layak Pakai";
-    public PerhitunganKonsentrasi(double rgb) {
+    public CalculationConcentration(double rgb) {
         this.rgb = rgb;
     }
 

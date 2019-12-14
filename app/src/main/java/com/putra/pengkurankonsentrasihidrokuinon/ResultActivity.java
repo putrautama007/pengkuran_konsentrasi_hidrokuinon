@@ -6,13 +6,16 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.putra.pengkurankonsentrasihidrokuinon.model.BitMapConverter;
-import com.putra.pengkurankonsentrasihidrokuinon.model.PerhitunganKonsentrasi;
+import com.putra.pengkurankonsentrasihidrokuinon.model.CalculationConcentration;
+import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
+import com.putra.pengkurankonsentrasihidrokuinon.room.ScanDataDatabase;
 
 import java.util.Objects;
 
@@ -46,7 +49,7 @@ public class ResultActivity extends AppCompatActivity {
 
         assert bitmap != null;
         BitMapConverter bitMapConverter = new BitMapConverter(bitmap);
-        int[] rgb = bitMapConverter.getAverageColorRGB();
+        final int[] rgb = bitMapConverter.getAverageColorRGB();
 
         tvRed.setText(getResources().getString(R.string.red) + rgb[0]);
         tvGreen.setText(getResources().getString(R.string.green) + rgb[1]);
@@ -54,10 +57,27 @@ public class ResultActivity extends AppCompatActivity {
 
         llColor.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
 
-        PerhitunganKonsentrasi perhitunganKonsentrasi = new PerhitunganKonsentrasi(rgb[2]);
-        tvConcentration.setText(getResources().getString(R.string.konsentrasi) + perhitunganKonsentrasi.concentrationCalculation() + getResources().getString(R.string.satuan_konsentrasi));
-        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + perhitunganKonsentrasi.concentrationPercentage());
-        tvStatus.setText(getResources().getString(R.string.status) + perhitunganKonsentrasi.checkStatus());
+        final CalculationConcentration calculationConcentration = new CalculationConcentration(rgb[2]);
+        tvConcentration.setText(getResources().getString(R.string.konsentrasi) + calculationConcentration.concentrationCalculation() + getResources().getString(R.string.satuan_konsentrasi));
+        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + calculationConcentration.concentrationPercentage());
+        tvStatus.setText(getResources().getString(R.string.status) + calculationConcentration.checkStatus());
+
+        btnSaveSample.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScanDataDatabase scanDataDatabase = ScanDataDatabase.getInstance(ResultActivity.this);
+                ScanModel scanModel = new ScanModel(
+                        System.currentTimeMillis(),
+                        etSampleName.getText().toString(),
+                        rgb[0],
+                        rgb[1],
+                        rgb[2],
+                        calculationConcentration.concentrationCalculation(),
+                        calculationConcentration.concentrationPercentage(),
+                        calculationConcentration.checkStatus());
+                scanDataDatabase.calculationDao().insertScanData(scanModel);
+            }
+        });
 
     }
 

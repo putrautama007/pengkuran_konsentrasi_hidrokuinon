@@ -2,14 +2,15 @@ package com.putra.pengkurankonsentrasihidrokuinon.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "scanData")
 public class ScanModel {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int id;
+    private long id;
 
     @ColumnInfo(name = "sampleName")
     private String sampleName;
@@ -31,4 +32,16 @@ public class ScanModel {
 
     @ColumnInfo(name = "status")
     private String status;
+
+    @Ignore
+    public ScanModel(long id, String sampleName, int red, int green, int blue, double concentration, double concentrationPercentage, String status) {
+        this.id = id;
+        this.sampleName = sampleName;
+        this.red = red;
+        this.green = green;
+        this.blue = blue;
+        this.concentration = concentration;
+        this.concentrationPercentage = concentrationPercentage;
+        this.status = status;
+    }
 }
