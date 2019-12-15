@@ -1,7 +1,6 @@
 package com.putra.pengkurankonsentrasihidrokuinon.room;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -17,6 +16,6 @@ public interface CalculationDao {
     @Insert
     void insertScanData(ScanModel scanModel);
 
-    @Delete
-    void deleteScanData(ScanModel scanModel);
+    @Query("SELECT * FROM scanData WHERE id = :id")
+    ScanModel getScanDataById(long id);
 }

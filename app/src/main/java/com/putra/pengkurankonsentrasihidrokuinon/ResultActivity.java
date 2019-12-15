@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.putra.pengkurankonsentrasihidrokuinon.model.BitMapConverter;
 import com.putra.pengkurankonsentrasihidrokuinon.model.CalculationConcentration;
@@ -66,32 +67,36 @@ public class ResultActivity extends AppCompatActivity {
 
         final CalculationConcentration calculationConcentration = new CalculationConcentration(rgb[2]);
         tvConcentration.setText(getResources().getString(R.string.konsentrasi) + decimalFormat.format(calculationConcentration.concentrationCalculation()) + getResources().getString(R.string.satuan_konsentrasi));
-        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + decimalFormat.format(calculationConcentration.concentrationPercentage()));
+        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + decimalFormat.format(calculationConcentration.concentrationPercentage()) + getResources().getString(R.string.percent));
         tvStatus.setText(getResources().getString(R.string.status) + calculationConcentration.checkStatus());
 
         btnSaveSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final ScanModel scanModel = new ScanModel(
-                        System.currentTimeMillis(),
-                        etSampleName.getText().toString(),
-                        rgb[0],
-                        rgb[1],
-                        rgb[2],
-                        calculationConcentration.concentrationCalculation(),
-                        calculationConcentration.concentrationPercentage(),
-                        calculationConcentration.checkStatus());
-                AppExecutors.getInstance().diskIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        scanDataDatabase.calculationDao().insertScanData(scanModel);
-                        Intent intentToMain = new Intent(ResultActivity.this,MainActivity.class);
-                        intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intentToMain);
-                    }
-                });
+               if (!etSampleName.getText().toString().equals("")){
+                   final ScanModel scanModel = new ScanModel(
+                           System.currentTimeMillis(),
+                           etSampleName.getText().toString(),
+                           rgb[0],
+                           rgb[1],
+                           rgb[2],
+                           calculationConcentration.concentrationCalculation(),
+                           calculationConcentration.concentrationPercentage(),
+                           calculationConcentration.checkStatus());
+                   AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                       @Override
+                       public void run() {
+                           scanDataDatabase.calculationDao().insertScanData(scanModel);
+                           Intent intentToMain = new Intent(ResultActivity.this,MainActivity.class);
+                           intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                           intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           startActivity(intentToMain);
+                       }
+                   });
+               }else {
+                   Toast.makeText(ResultActivity.this, "Isi nama sample", Toast.LENGTH_SHORT).show();
+               }
             }
         });
 

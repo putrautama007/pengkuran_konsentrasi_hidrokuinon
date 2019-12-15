@@ -2,6 +2,7 @@ package com.putra.pengkurankonsentrasihidrokuinon.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.putra.pengkurankonsentrasihidrokuinon.DetailSampleDataActivity;
 import com.putra.pengkurankonsentrasihidrokuinon.R;
 import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
 
@@ -34,11 +37,19 @@ public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ScanModel scanModel = scanModelList.get(position);
+        final ScanModel scanModel = scanModelList.get(position);
         holder.llColorSample.setBackgroundColor(Color.rgb(scanModel.getRed(), scanModel.getGreen(),scanModel.getBlue()));
         holder.tvSampleName.setText(scanModel.getSampleName());
         holder.tvSampleColorRGB.setText("RGB : " + "(" + scanModel.getRed() +","+ scanModel.getGreen() +","+ scanModel.getBlue() + ")");
-        holder.tvSampleStatus.setText("Status : "+scanModel.getStatus());
+        holder.tvSampleStatus.setText(context.getResources().getString(R.string.status)+scanModel.getStatus());
+        holder.cvScanData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailSampleDataActivity.class);
+                intent.putExtra("sampleId",scanModel.getId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -58,12 +69,14 @@ public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout llColorSample;
         TextView tvSampleName, tvSampleColorRGB, tvSampleStatus;
+        CardView cvScanData;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             llColorSample = itemView.findViewById(R.id.llColorSample);
             tvSampleName = itemView.findViewById(R.id.tvNameSample);
             tvSampleColorRGB = itemView.findViewById(R.id.tvRGB);
             tvSampleStatus = itemView.findViewById(R.id.tvStatus);
+            cvScanData = itemView.findViewById(R.id.cvScanData);
         }
     }
 }
