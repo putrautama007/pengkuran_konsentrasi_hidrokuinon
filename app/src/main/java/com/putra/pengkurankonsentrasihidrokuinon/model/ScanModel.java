@@ -10,7 +10,7 @@ public class ScanModel {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private long id;
+    long id;
 
     @ColumnInfo(name = "sampleName")
     private String sampleName;
@@ -33,7 +33,6 @@ public class ScanModel {
     @ColumnInfo(name = "status")
     private String status;
 
-    @Ignore
     public ScanModel(long id, String sampleName, int red, int green, int blue, double concentration, double concentrationPercentage, String status) {
         this.id = id;
         this.sampleName = sampleName;
@@ -43,5 +42,37 @@ public class ScanModel {
         this.concentration = concentration;
         this.concentrationPercentage = concentrationPercentage;
         this.status = status;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getSampleName() {
+        return sampleName;
+    }
+
+    public int getRed() {
+        return red;
+    }
+
+    public int getGreen() {
+        return green;
+    }
+
+    public int getBlue() {
+        return blue;
+    }
+
+    public double getConcentration() {
+        return concentration;
+    }
+
+    public double getConcentrationPercentage() {
+        return concentrationPercentage;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

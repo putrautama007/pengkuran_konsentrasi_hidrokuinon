@@ -3,6 +3,7 @@ package com.putra.pengkurankonsentrasihidrokuinon;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 import com.putra.pengkurankonsentrasihidrokuinon.model.BitMapConverter;
 import com.putra.pengkurankonsentrasihidrokuinon.model.CalculationConcentration;
 import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
+import com.putra.pengkurankonsentrasihidrokuinon.room.AppExecutors;
 import com.putra.pengkurankonsentrasihidrokuinon.room.ScanDataDatabase;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class ResultActivity extends AppCompatActivity {
@@ -25,6 +28,8 @@ public class ResultActivity extends AppCompatActivity {
     LinearLayout llColor;
     TextView tvRed, tvGreen, tvBlue, tvConcentration, tvHqLevel, tvStatus;
     Button btnSaveSample;
+    private ScanDataDatabase scanDataDatabase;
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -45,6 +50,8 @@ public class ResultActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         btnSaveSample = findViewById(R.id.btnSave);
 
+        scanDataDatabase = ScanDataDatabase.getInstance(ResultActivity.this);
+
         Bitmap bitmap = getIntent().getParcelableExtra("result");
 
         assert bitmap != null;
@@ -58,15 +65,15 @@ public class ResultActivity extends AppCompatActivity {
         llColor.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
 
         final CalculationConcentration calculationConcentration = new CalculationConcentration(rgb[2]);
-        tvConcentration.setText(getResources().getString(R.string.konsentrasi) + calculationConcentration.concentrationCalculation() + getResources().getString(R.string.satuan_konsentrasi));
-        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + calculationConcentration.concentrationPercentage());
+        tvConcentration.setText(getResources().getString(R.string.konsentrasi) + decimalFormat.format(calculationConcentration.concentrationCalculation()) + getResources().getString(R.string.satuan_konsentrasi));
+        tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + decimalFormat.format(calculationConcentration.concentrationPercentage()));
         tvStatus.setText(getResources().getString(R.string.status) + calculationConcentration.checkStatus());
 
         btnSaveSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScanDataDatabase scanDataDatabase = ScanDataDatabase.getInstance(ResultActivity.this);
-                ScanModel scanModel = new ScanModel(
+
+                final ScanModel scanModel = new ScanModel(
                         System.currentTimeMillis(),
                         etSampleName.getText().toString(),
                         rgb[0],
@@ -75,7 +82,16 @@ public class ResultActivity extends AppCompatActivity {
                         calculationConcentration.concentrationCalculation(),
                         calculationConcentration.concentrationPercentage(),
                         calculationConcentration.checkStatus());
-                scanDataDatabase.calculationDao().insertScanData(scanModel);
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        scanDataDatabase.calculationDao().insertScanData(scanModel);
+                        Intent intentToMain = new Intent(ResultActivity.this,MainActivity.class);
+                        intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intentToMain);
+                    }
+                });
             }
         });
 
