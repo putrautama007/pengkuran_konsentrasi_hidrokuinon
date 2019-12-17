@@ -9,7 +9,7 @@ public class CalculationConcentration {
     }
 
     private double absorbency(){
-        return -Math.log(rgb/255);
+        return -Math.log10((rgb/255));
     }
 
     public double concentrationCalculation(){
