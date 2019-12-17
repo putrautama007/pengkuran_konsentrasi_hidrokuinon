@@ -8,10 +8,14 @@ public class CalculationConcentration {
         this.rgb = rgb;
     }
 
+    private double absorbency(){
+        return -Math.log(rgb/255);
+    }
+
     public double concentrationCalculation(){
-        double xAxis = 16.971;
-        double yAxis = 138.76;
-        return (yAxis -rgb)/ xAxis;
+        double a = 0.07;
+        double b = 0.1538;
+        return (absorbency() - b)/ a;
     }
 
     public double concentrationPercentage(){
