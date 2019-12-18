@@ -3,9 +3,9 @@
 <!--    <color name="colorPrimary">#008577</color>-->
 <!--    <color name="colorPrimaryDark">#00574B</color>-->
 <!--    <color name="colorAccent">#D81B60</color>-->
-    <color name="colorPrimary">#c75696</color>
-    <color name="colorPrimaryDark">#9d3978</color>
-    <color name="colorAccent">#512e67</color>
-    <color name="colorBackgroundGrey">#FBFCFD</color>
+    <color name="colorPrimary">#2962ff</color>
+    <color name="colorPrimaryDark">#0039cb</color>
+    <color name="colorAccent">#01579b</color>
+    <color name="colorBackgroundGrey">#f0f0f0</color>
     <color name="colorHint">#C1C9CD</color>
 </resources>

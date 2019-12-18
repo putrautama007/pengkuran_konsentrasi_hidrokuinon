@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,13 +13,12 @@ import com.putra.pengkurankonsentrasihidrokuinon.room.AppExecutors;
 import com.putra.pengkurankonsentrasihidrokuinon.room.ScanDataDatabase;
 
 import java.text.DecimalFormat;
-import java.util.List;
 import java.util.Objects;
 
 public class DetailSampleDataActivity extends AppCompatActivity {
 
     LinearLayout llColor;
-    TextView tvRed, tvGreen, tvBlue, tvConcentration, tvHqLevel, tvStatus, tvSampleName;
+    TextView tvRGB, tvConcentration, tvHqLevel, tvStatus, tvSampleName;
     private ScanDataDatabase scanDataDatabase;
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -34,9 +31,7 @@ public class DetailSampleDataActivity extends AppCompatActivity {
 
         tvSampleName = findViewById(R.id.tvSampleNameDetail);
         llColor = findViewById(R.id.llColorDetail);
-        tvRed = findViewById(R.id.txtRedDetail);
-        tvGreen = findViewById(R.id.txtGreenDetail);
-        tvBlue = findViewById(R.id.txtBlueDetail);
+        tvRGB = findViewById(R.id.txtRGBDetail);
         tvConcentration = findViewById(R.id.tvConcentrationDetail);
         tvHqLevel = findViewById(R.id.tvHQLevelDetail);
         tvStatus = findViewById(R.id.tvStatusDetail);
@@ -63,9 +58,7 @@ public class DetailSampleDataActivity extends AppCompatActivity {
                     public void run() {
                         tvSampleName.setText(scanModel.getSampleName());
                         llColor.setBackgroundColor(Color.rgb(scanModel.getRed(), scanModel.getGreen(), scanModel.getBlue()));
-                        tvRed.setText(getResources().getString(R.string.red) +scanModel.getRed());
-                        tvGreen.setText(getResources().getString(R.string.green) + scanModel.getGreen());
-                        tvBlue.setText(getResources().getString(R.string.blue) + scanModel.getBlue());
+                        tvRGB.setText(getResources().getString(R.string.RGB) + "(" + scanModel.getRed() +","+ scanModel.getGreen() +","+ scanModel.getBlue() + ")");
                         tvConcentration.setText(getResources().getString(R.string.konsentrasi) + decimalFormat.format(scanModel.getConcentration()) + getResources().getString(R.string.satuan_konsentrasi));
                         tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + decimalFormat.format(scanModel.getConcentrationPercentage()) + getResources().getString(R.string.percent));
                         tvStatus.setText(getResources().getString(R.string.status) + scanModel.getStatus());

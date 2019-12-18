@@ -104,6 +104,7 @@ public class SelectImageActivity extends AppCompatActivity {
                selectPickImageDialog.dismiss();
                 ivGetImage.setVisibility(View.GONE);
                 ivSetImage.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 checkPermission();
             }
         });
@@ -113,6 +114,7 @@ public class SelectImageActivity extends AppCompatActivity {
                 selectPickImageDialog.dismiss();
                 ivGetImage.setVisibility(View.GONE);
                 ivSetImage.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 fromGallery();
             }
         });
@@ -201,12 +203,14 @@ public class SelectImageActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
                 Glide.with(this).load(resultUri).into(ivSetImage);
+                progressBar.setVisibility(View.GONE);
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), resultUri);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                progressBar.setVisibility(View.GONE);
                 Exception error = result.getError();
                 Toast.makeText(this, error.toString(), Toast.LENGTH_LONG).show();
             }

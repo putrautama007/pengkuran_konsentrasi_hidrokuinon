@@ -46,9 +46,10 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:background="@drawable/rounded_image"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:padding="20dp"
         android:scaleType="fitXY"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +83,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivScanImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivSetImage"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

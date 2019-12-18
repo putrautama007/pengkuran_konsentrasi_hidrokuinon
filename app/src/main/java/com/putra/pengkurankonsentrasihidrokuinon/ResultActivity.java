@@ -27,7 +27,7 @@ public class ResultActivity extends AppCompatActivity {
 
     EditText etSampleName;
     LinearLayout llColor;
-    TextView tvRed, tvGreen, tvBlue, tvConcentration, tvHqLevel, tvStatus;
+    TextView tvRGB,tvConcentration, tvHqLevel, tvStatus;
     Button btnSaveSample;
     private ScanDataDatabase scanDataDatabase;
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -43,13 +43,11 @@ public class ResultActivity extends AppCompatActivity {
 
         etSampleName = findViewById(R.id.etSampleName);
         llColor = findViewById(R.id.llColor);
-        tvRed = findViewById(R.id.txtRed);
-        tvGreen = findViewById(R.id.txtGreen);
-        tvBlue = findViewById(R.id.txtBlue);
+        tvRGB = findViewById(R.id.tvRGBResult);
         tvConcentration = findViewById(R.id.tvConcentration);
         tvHqLevel = findViewById(R.id.tvHQLevel);
         tvStatus = findViewById(R.id.tvStatus);
-        btnSaveSample = findViewById(R.id.btnSave);
+        btnSaveSample = findViewById(R.id.btnSaveResult);
 
         scanDataDatabase = ScanDataDatabase.getInstance(ResultActivity.this);
 
@@ -59,9 +57,7 @@ public class ResultActivity extends AppCompatActivity {
         BitMapConverter bitMapConverter = new BitMapConverter(bitmap);
         final int[] rgb = bitMapConverter.getAverageColorRGB();
 
-        tvRed.setText(getResources().getString(R.string.red) + rgb[0]);
-        tvGreen.setText(getResources().getString(R.string.green) + rgb[1]);
-        tvBlue.setText(getResources().getString(R.string.blue) + rgb[2]);
+        tvRGB.setText(getResources().getString(R.string.RGB) + "(" + rgb[0] +","+ rgb[1] +","+ rgb[2] + ")");
 
         llColor.setBackgroundColor(Color.rgb(rgb[0], rgb[1], rgb[2]));
 
