@@ -14,4 +14,6 @@
     <string name="tingkat_hq">Tingkat&#160;HQ&#160;:&#160;</string>
     <string name="status">Status&#160;:&#160;</string>
     <string name="percent">&#160;%</string>
+    <string name="choose_photo_info">Pilih foto yang akan dipindai</string>
+    <string name="choose_picture">Ambil gambar</string>
 </resources>

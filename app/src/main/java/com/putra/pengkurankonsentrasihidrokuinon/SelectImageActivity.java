@@ -3,6 +3,7 @@ package com.putra.pengkurankonsentrasihidrokuinon;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
@@ -20,11 +21,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,17 +41,21 @@ public class SelectImageActivity extends AppCompatActivity {
     private static final int GALLERY_IMAGE_CODE = 1;
     private String cameraFilePath;
     Bitmap bitmap;
+    ProgressBar progressBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_image);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         ivGetImage = findViewById(R.id.ivScanImage);
         ivSetImage = findViewById(R.id.ivSetImage);
         btnScan = findViewById(R.id.btnScan);
+        progressBar = findViewById(R.id.progressbarSelectImage);
         selectPickImageDialog = new Dialog(this);
 
         ivGetImage.setOnClickListener(new View.OnClickListener() {
@@ -70,9 +75,13 @@ public class SelectImageActivity extends AppCompatActivity {
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SelectImageActivity.this, ResultActivity.class);
-                intent.putExtra("result", bitmap);
-                startActivity(intent);
+                if (bitmap != null) {
+                    Intent intent = new Intent(SelectImageActivity.this, ResultActivity.class);
+                    intent.putExtra("result", bitmap);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Tolong pilih gambar yang akan di scan", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
