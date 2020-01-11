@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pengkuran Konsentrasi Hidrokuinon</string>
+    <string name="app_name">Hydroquinone Analyzer</string>
     <string name="action_settings">Settings</string>
     <string name="lakukan_scan">Lakukan Scan</string>
     <string name="camera">Camera</string>

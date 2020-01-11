@@ -85,8 +85,8 @@ public class ResultActivity extends AppCompatActivity {
                        public void run() {
                            scanDataDatabase.calculationDao().insertScanData(scanModel);
                            Intent intentToMain = new Intent(ResultActivity.this,MainActivity.class);
-                           intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                           intentToMain.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                           intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                           intentToMain.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                            startActivity(intentToMain);
                        }
                    });
