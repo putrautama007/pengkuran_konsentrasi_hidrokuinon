@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.putra.pengkurankonsentrasihidrokuinon.adapter.ListSampleAdapter;
 import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
 import com.putra.pengkurankonsentrasihidrokuinon.room.AppExecutors;
@@ -12,15 +11,12 @@ import com.putra.pengkurankonsentrasihidrokuinon.room.ScanDataDatabase;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import java.util.ArrayList;
+import android.view.View;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvListSample;
     private ListSampleAdapter listSampleAdapter;
     ScanDataDatabase scanDataDatabase;
+    ConstraintLayout clNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        clNoData = findViewById(R.id.clNoData);
 
         rvListSample = findViewById(R.id.rvListSample);
         rvListSample.setLayoutManager(new LinearLayoutManager(this));
@@ -64,13 +63,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final List<ScanModel> scanModels = scanDataDatabase.calculationDao().getScanData();
-                Log.d("test", String.valueOf(scanModels.size()));
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listSampleAdapter.setScanData(scanModels);
-                    }
-                });
+                if (scanModels.size() == 0){
+                    clNoData.setVisibility(View.VISIBLE);
+                }else {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            listSampleAdapter.setScanData(scanModels);
+                        }
+                    });
+                }
             }
         });
     }
