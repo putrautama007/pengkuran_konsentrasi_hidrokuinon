@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+// Class yang digunakan untuk menyimapan data
 @Entity(tableName = "scanData")
 public class ScanModel {
 

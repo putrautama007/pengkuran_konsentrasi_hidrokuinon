@@ -22,6 +22,8 @@ public class DetailSampleDataActivity extends AppCompatActivity {
     private ScanDataDatabase scanDataDatabase;
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
+
+    // fungsi yang dijalankan saar pertama kali membuka halaman
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,12 +43,14 @@ public class DetailSampleDataActivity extends AppCompatActivity {
         retrieveScanDataById(id);
     }
 
+    // fungsi yang dijalankan saat menekan tombol back
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
+    // fungsi yang dijalankan untuk mendapatkan data yang sudah di simpan pada RoomDB
     private void retrieveScanDataById(final long id) {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override

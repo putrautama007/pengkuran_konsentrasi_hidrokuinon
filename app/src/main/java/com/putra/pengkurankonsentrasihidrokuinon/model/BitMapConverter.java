@@ -3,6 +3,8 @@ package com.putra.pengkurankonsentrasihidrokuinon.model;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 
+
+//class yang digunakan untuk mendapatkan nilai RGB dari gambar yang sudah di crop
 public class BitMapConverter {
     private Bitmap bitmap;
 

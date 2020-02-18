@@ -20,6 +20,7 @@ import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
 
 import java.util.List;
 
+//Class digunakan untuk membuat list secara dinamik
 public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.ViewHolder> {
     private Context context;
     private List<ScanModel> scanModelList;
@@ -28,12 +29,16 @@ public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.Vi
         this.context = context;
     }
 
+
+    //fungsi untuk menampilkan tampilan untuk list
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.row_sample,parent,false));
     }
 
+
+    //fungsi untuk memasukan data kedalam tampilan pada list
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -52,6 +57,7 @@ public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.Vi
         });
     }
 
+    //fungsi untuk mendapatkan jumlah banyak data yang akan ditampilkan pada list
     @Override
     public int getItemCount() {
         if (scanModelList == null){
@@ -60,12 +66,14 @@ public class ListSampleAdapter extends RecyclerView.Adapter<ListSampleAdapter.Vi
         return scanModelList.size();
     }
 
+    //fungsi untuk memperbarui data pada list
     public void setScanData(List<ScanModel> scanModels) {
         scanModelList = scanModels;
         notifyDataSetChanged();
     }
 
 
+    //class untuk menyambungkan class logic dengan dengan desain (XML)
     class ViewHolder extends RecyclerView.ViewHolder {
         LinearLayout llColorSample;
         TextView tvSampleName, tvSampleColorRGB, tvSampleStatus;

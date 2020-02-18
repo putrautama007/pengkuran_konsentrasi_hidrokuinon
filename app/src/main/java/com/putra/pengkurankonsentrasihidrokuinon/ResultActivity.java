@@ -32,6 +32,7 @@ public class ResultActivity extends AppCompatActivity {
     private ScanDataDatabase scanDataDatabase;
     private static DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
+    // fungsi yang dijalankan saar pertama kali membuka halaman
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class ResultActivity extends AppCompatActivity {
         tvHqLevel.setText(getResources().getString(R.string.tingkat_hq) + decimalFormat.format(calculationConcentration.concentrationPercentage()) + getResources().getString(R.string.percent));
         tvStatus.setText(getResources().getString(R.string.status) + calculationConcentration.checkStatus());
 
+        //melakukan penyimpanan pada RoomDb saat melakukan penekanan tombol
         btnSaveSample.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,6 +100,7 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
+    // fungsi yang dijalankan saat menekan tombol back
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

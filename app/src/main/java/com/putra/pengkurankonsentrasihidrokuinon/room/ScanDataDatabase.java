@@ -8,6 +8,8 @@ import androidx.room.RoomDatabase;
 
 import com.putra.pengkurankonsentrasihidrokuinon.model.ScanModel;
 
+
+//CLass yang digunakan untuk memanggil roomDb untuk dapat digunakan fungsi fungsinya
 @Database(entities = {ScanModel.class}, exportSchema = false, version = 1)
 public abstract class ScanDataDatabase extends RoomDatabase {
     private static final String DB_NAME = "concentration_db";

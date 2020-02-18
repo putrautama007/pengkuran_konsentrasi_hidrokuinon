@@ -10,6 +10,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private static final int LOADING_TIME = 2000;
 
+    // fungsi yang dijalankan saar pertama kali membuka halaman
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

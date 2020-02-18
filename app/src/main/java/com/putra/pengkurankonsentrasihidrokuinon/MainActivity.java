@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ScanDataDatabase scanDataDatabase;
     ConstraintLayout clNoData;
 
+    // fungsi yang dijalankan saar pertama kali membuka halaman
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         retrieveScanData();
     }
 
+    // fungsi yang dijalankan untuk mendapatkan data yang sudah di simpan pada RoomDB
     private void retrieveScanData() {
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+//    tidak digunakan
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        getMenuInflater().inflate(R.menu.menu_main, menu);

@@ -44,6 +44,7 @@ public class SelectImageActivity extends AppCompatActivity {
     ProgressBar progressBar;
 
 
+    // fungsi yang dijalankan saar pertama kali membuka halaman
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +88,16 @@ public class SelectImageActivity extends AppCompatActivity {
 
     }
 
+    // fungsi yang dijalankan saat menekan tombol back
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
+
+    // fungsi yang dijalankan saat menekan tombol kamera pada layar yang akan menampilkan
+    // popup untuk memilih mengambil gambar dari kamera atau dari gallery
     public void showPopup(View v) {
         Button btnCamera, btnGallery;
         selectPickImageDialog.setContentView(R.layout.popup);
@@ -122,6 +127,8 @@ public class SelectImageActivity extends AppCompatActivity {
         selectPickImageDialog.show();
     }
 
+
+    // fungsi yang dijalankan saat sudah melakukan pengambilan gambar dari kamera
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -139,6 +146,7 @@ public class SelectImageActivity extends AppCompatActivity {
         return image;
     }
 
+    // fungsi yang dijalankan saat penggunana untuk memberikan permission untuk mengakses camera atau gallery
     private void checkPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(SelectImageActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, CAPTURE_IMAGE_CODE);
@@ -146,6 +154,8 @@ public class SelectImageActivity extends AppCompatActivity {
             captureFromCamera();
         }
     }
+
+    // fungsi yang dijalankan saat memeilih mengambil gambar dari kamera
     private void captureFromCamera(){
         try {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -156,6 +166,8 @@ public class SelectImageActivity extends AppCompatActivity {
         }
 
     }
+
+    // fungsi yang dijalankan saat sudah mendapatkan hak akses dari pengguna untuk menggunakan kamera atau gallery
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -170,6 +182,7 @@ public class SelectImageActivity extends AppCompatActivity {
         }
     }
 
+    // fungsi yang dijalankan saat mengambil gambar dari gallery
     private void fromGallery(){
         Intent pickPhoto = new Intent(Intent.ACTION_PICK);
         pickPhoto.setType("image/*");
@@ -179,6 +192,7 @@ public class SelectImageActivity extends AppCompatActivity {
         startActivityForResult(pickPhoto , GALLERY_IMAGE_CODE);
     }
 
+    // fungsi yang dijalankan saat sudah mendapatkan hasil dari kamera atau gallery
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
